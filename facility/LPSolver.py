@@ -77,7 +77,9 @@ class FacilitySolver:
         model.facility_c = pyo.Constraint(self.facility_var, self.customer_var, rule = self._facility_constraint)
 
         # solve
-        opt = SolverFactory('glpk')
+        opt = SolverFactory('gurobi')
+        opt.options["threads"] = 8
+        opt.options['timelimit'] = 1800
         result_obj = opt.solve(model)
 
         #model.pprint()
